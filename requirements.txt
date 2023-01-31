@@ -1,2 +1,5 @@
+django_compressor
 Django
+gunicorn
 javascript
+whitenoise[brotli]

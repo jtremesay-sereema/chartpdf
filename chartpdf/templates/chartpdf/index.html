@@ -1,4 +1,5 @@
 {% load static %}
+{% load compress %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SVG generation demo</title>
 </head>
 
 <body>
@@ -42,10 +43,11 @@
         {{ d3_django_svg|safe }}
     </div>
 
-
+    {% compress js %}
     <script src="{% static 'chartpdf/d3@7.8.2.js' %}"></script>
     <script src="{% static 'chartpdf/cp_scatter.js' %}"></script>
     <script src="{% static 'chartpdf/index.js' %}"></script>
+    {% endcompress %}
 </body>
 
 </html>
