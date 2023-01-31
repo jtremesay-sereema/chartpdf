@@ -9,6 +9,8 @@ from django.template import loader
 def get_points(count=None, seed=None):
     if count is None:
         count = 800
+    else:
+        count = min(max(0, count), 10_000)
 
     if seed is not None:
         random.seed(seed)
