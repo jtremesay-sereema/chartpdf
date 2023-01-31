@@ -1,7 +1,8 @@
+import random
+
+import javascript
 from django.http import JsonResponse
 from django.shortcuts import render
-import random
-import javascript
 from django.template import loader
 
 
@@ -11,11 +12,11 @@ def get_points(count=None, seed=None):
 
     if seed is not None:
         random.seed(seed)
-    
-    return [{
-        "x": random.gauss(0.5, 0.3),
-        "y": random.gauss(0.5, 0.2)
-    } for _ in range(count)]
+
+    return [
+        {"x": random.gauss(0.5, 0.3), "y": random.gauss(0.5, 0.2)}
+        for _ in range(count)
+    ]
 
 
 def get_params(GET):
@@ -28,7 +29,7 @@ def get_params(GET):
         seed = int(GET["seed"])
     except (KeyError, ValueError):
         seed = None
-    
+
     return count, seed
 
 
@@ -41,13 +42,29 @@ def api_get_points(request):
 def django_scatter_svg(request):
     count, seed = get_params(request.GET)
 
-    return render(request, "chartpdf/django_scatter.svg", {"points": [{"x": p["x"] * 800, "y": p["y"] * 600} for p in get_points(count, seed)]}, "image/svg+xml")
-    
+    return render(
+        request,
+        "chartpdf/django_scatter.svg",
+        {
+            "points": [
+                {"x": p["x"] * 800, "y": p["y"] * 600}
+                for p in get_points(count, seed)
+            ]
+        },
+        "image/svg+xml",
+    )
+
 
 def index(request):
     count, seed = get_params(request.GET)
 
-    js = loader.render_to_string("chartpdf/d3_django_svg.js", {"points": get_points(count, seed)})
+    js = loader.render_to_string(
+        "chartpdf/d3_django_svg.js", {"points": get_points(count, seed)}
+    )
     svg = javascript.eval_js(js)
 
-    return render(request, "chartpdf/index.html", {"d3_django_svg": svg, "count": count, "seed": seed})
+    return render(
+        request,
+        "chartpdf/index.html",
+        {"d3_django_svg": svg, "count": count, "seed": seed},
+    )
