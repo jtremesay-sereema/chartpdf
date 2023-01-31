@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>D3</h2>
+    <div>
+        <p>
+            This graph is generated with the cannonical method: the SVG is
+            build with d3 on the client side with data loaded from an AJAX
+            call.
+        </p>
+        <svg class="cp-scatter" data-src="{% url 'chartpdf:api_get_points' %}?count={{ count }}&seed={{ seed }}"
+            width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+        </svg>
+    </div>
+
+    <h2>Django template</h2>
+    <div>
+        <p>
+            This graph is generated manually using the templating system of
+            Django and loaded through a img tag. No JavaScript involved.
+        </p>
+        <img src="{% url 'chartpdf:django_scatter_svg' %}?count={{ count }}&seed={{ seed }}">
+    </div>
+
+
+    <h2>D3 Django JSPyBridge</h2>
+    <div>
+        <p>
+            This graph is generated using d3 runned through JSPyBridge by
+            Django and inserted using the templating system.
+        </p>
+
+        {{ d3_django_svg|safe }}
+    </div>
+
+
+    <script src="{% static 'chartpdf/d3@7.8.2.js' %}"></script>
+    <script src="{% static 'chartpdf/cp_scatter.js' %}"></script>
+    <script src="{% static 'chartpdf/index.js' %}"></script>
+</body>
+
+</html>
