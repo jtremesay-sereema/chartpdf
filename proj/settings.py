@@ -24,14 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.environ.get("DEBUG", "false") == "true"
 
 # SECURITY WARNING: keep the secret key used in production secret!
-try:
-    SECRET_KEY = os.environ["SECRET_KEY"]
-except KeyError:
-    if DEBUG:
-        SECRET_KEY = "django-insecure-_jk(0=c!^bjy(l$#g718wlal_=m+pw-g^tuu*!(5w^n^xeys!@"
-    else:
-        raise RuntimeError("SECRET_KEY not defined")
-
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-_jk(0=c!^bjy(l$#g718wlal_=m+pw-g^tuu*!(5w^n^xeys!@",
+)
 ALLOWED_HOSTS = ["localhost"]
 ALLOWED_HOSTS.extend(os.environ.get("ALLOWED_HOST", "").split(","))
 
@@ -39,11 +35,11 @@ ALLOWED_HOSTS.extend(os.environ.get("ALLOWED_HOST", "").split(","))
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
+    #    "django.contrib.admin",
+    #    "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
+    #    "django.contrib.sessions",
+    #    "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "compressor",
@@ -53,11 +49,11 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
+    # "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
+    # "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
