@@ -1,6 +1,6 @@
 function cp_scatter_with_url(svg) {
     let data_src = svg.attr("data-src")
-    d3.json(data_src).then((data) => {
+    d3.json(data_src).then(data => {
         cp_scatter_with_points(svg, data.points)
     })
 }
@@ -17,7 +17,7 @@ function cp_scatter_with_points(svg, points) {
     // Draw the points
     svg.selectAll(".cf-point")
         .data(points)
-        .join(enter => enter.append("circle"), update => update, exit => exit.remove())
+        .join("circle")
         .attr("cx", p => p.x * 800)
         .attr("cy", p => p.y * 600)
         .attr("r", 4)
