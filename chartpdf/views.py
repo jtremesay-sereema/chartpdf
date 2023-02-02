@@ -4,6 +4,7 @@ import javascript
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.template import loader
+import subprocess
 
 
 def get_points(count=None, seed=None):
@@ -57,6 +58,11 @@ def django_scatter_svg(request):
     )
 
 
+def run_js(js) -> str:
+    return subprocess.call("node", input=js, text=True, capture_output=True).stdout
+
+
+
 def index(request):
     count, seed = get_params(request.GET)
 
@@ -68,11 +74,18 @@ def index(request):
     )
     svg_jspybridge = javascript.eval_js(js_jspybridge)
 
+    # D3 + node
+    js_node = loader.render_to_string(
+        "chartpdf/d3_node_svg.js", {"points": points}
+    )
+    svg_node = run_js(js_node)
+
     return render(
         request,
         "chartpdf/index.html",
         {
             "d3_jspybridge_svg": svg_jspybridge, 
+            "d3_node_svg": svg_node, 
             "count": count, 
             "seed": seed
         },

@@ -43,6 +43,17 @@
         {{ d3_jspybridge_svg|safe }}
     </div>
 
+
+    <h2>D3 Node</h2>
+    <div>
+        <p>
+            This graph is generated using d3 runned through node by
+            Django and inserted using the templating system.
+        </p>
+
+        {{ d3_node_svg|safe }}
+    </div>
+
     {% compress js %}
     <script src="{% static 'chartpdf/d3@7.8.2.js' %}"></script>
     <script src="{% static 'chartpdf/cp_scatter.js' %}"></script>
