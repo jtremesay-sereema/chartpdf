@@ -59,24 +59,23 @@ def django_scatter_svg(request):
 
 
 def run_js(js) -> str:
-    return subprocess.call("node", input=js, text=True, capture_output=True).stdout
-
+    return subprocess.check_output(["node", "--input-type", "module"], input=js, text=True)
 
 
 def index(request):
     count, seed = get_params(request.GET)
 
-    points = get_points(count, seed)
+    points_ = get_points(count, seed)
 
     # D3 + jspybridge
     js_jspybridge = loader.render_to_string(
-        "chartpdf/d3_jspybridge_svg.js", {"points": points}
+        "chartpdf/d3_jspybridge_svg.js", {"points": points_}
     )
     svg_jspybridge = javascript.eval_js(js_jspybridge)
 
     # D3 + node
     js_node = loader.render_to_string(
-        "chartpdf/d3_node_svg.js", {"points": points}
+        "chartpdf/d3_node_svg.js", {"points": points_}
     )
     svg_node = run_js(js_node)
 

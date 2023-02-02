@@ -1,7 +1,7 @@
 {% load inline_static_tags %}
 
-const jsdom = require("jsdom")
-const d3 = require("d3")
+import * as jsdom from 'jsdom';
+import * as d3 from 'd3';
 
 {% inline_javascript "chartpdf/cp_scatter.js" %}
 
